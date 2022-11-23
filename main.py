@@ -1,19 +1,18 @@
 import sys
 from random import randrange
 
-from PyQt5 import uic  # Импортируем uic
+from UI import Ui_MainWindow
 from PyQt5.QtGui import QPainter, QColor
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
 
-class MyWidget(QMainWindow):
+class MyWidget(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('Ui.ui', self)  # Загружаем дизайн
+        self.setupUi(self)
         self.setFixedSize(600, 600)
         self.do_paint = False
         self.pushButton.clicked.connect(self.paint)
-        # Обратите внимание: имя элемента такое же как в QTDesigner
 
     def paintEvent(self, event):
         if self.do_paint:
@@ -27,10 +26,10 @@ class MyWidget(QMainWindow):
         self.repaint()
 
     def draw_flag(self, qp):
-        d = randrange(-300, 600)
-        x = randrange(0, 600)
-        y = randrange(0, 600)
-        qp.setBrush(QColor(255, 255, 0))
+        d = randrange(1, 600)
+        x = randrange(-300, 600)
+        y = randrange(-300, 600)
+        qp.setBrush(QColor(randrange(0, 256), randrange(0, 256), randrange(0, 256)))
         qp.setPen(QColor(0, 0, 0))
         qp.drawEllipse(x, y, d, d)
 
